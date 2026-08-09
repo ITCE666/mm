@@ -35,6 +35,16 @@ class QuotaHandoffTests(unittest.TestCase):
         self.assertEqual(result["status"], "unknown")
         self.assertFalse(result["should_handoff"])
 
+    def test_used_limit_normalizes(self):
+        result = self.run_check({"used": 96, "limit": 100})
+        self.assertEqual(result["status"], "low")
+        self.assertAlmostEqual(result["remaining_percent"], 4.0)
+
+    def test_out_of_range_usage_is_unknown(self):
+        result = self.run_check({"remaining_percent": 101})
+        self.assertEqual(result["status"], "unknown")
+        self.assertFalse(result["should_handoff"])
+
     def test_generator_writes_handoff(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
