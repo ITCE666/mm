@@ -1,0 +1,7 @@
+interface:
+  display_name: "Quota Handoff"
+  short_description: "Generate handoffs below usage thresholds"
+  default_prompt: "Use $quota-handoff to create a truthful project handoff from verified usage and current repository evidence."
+
+policy:
+  allow_implicit_invocation: true
